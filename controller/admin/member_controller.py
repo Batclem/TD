@@ -1,6 +1,6 @@
 import re
 
-from model.dao.member_dao import MemberDAO
+from model.dao.admin.member_dao import MemberDAO
 from exceptions import Error, InvalidData
 
 

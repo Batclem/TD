@@ -1,6 +1,7 @@
 
 from model.database import DatabaseEngine
 from controller.member_controller import MemberController
+from controller.sport_controller import SportController
 from vue.admin_vue import AdminVue
 from exceptions import Error
 
@@ -12,7 +13,8 @@ def main():
     database_engine = DatabaseEngine(url='sqlite:///bds.db')
     database_engine.create_database()
     member_controller = MemberController(database_engine)
-    admin_vue = AdminVue(member_controller)
+    member_controller_sport = SportController(database_engine)
+    admin_vue = AdminVue(member_controller, member_controller_sport)
 
     try:
         member = admin_vue.add_member()

@@ -1,17 +1,19 @@
 
 import sys
-from vue.member_vue import MemberVue
+from vue.admin.member_vue import MemberVue
+from vue.admin.sport_vue import SportVue
 from exceptions import ResourceNotFound, Error, InvalidData
 
 
-class AdminVue(MemberVue):
+class AdminVue(MemberVue, SportVue):
     """
     Admin Vue
     Admin specific interfaces
     """
 
-    def __init__(self, member_controller):
+    def __init__(self, member_controller, sport_controller):
         super().__init__(member_controller)
+        super().__init__(sport_controller)
 
     def help(self, commands):
         print()
@@ -37,6 +39,13 @@ class AdminVue(MemberVue):
             "search": "Show member profile",
             "delete": "Delete a member",
             "update": "Update a member",
+
+            "addSP": "Add association sport",
+            "listSP": "List association sport",
+            "searchSP": "Show sport profile",
+            "deleteSP": "Delete a sport",
+            "updateSP": "Update a sport",
+
             "help": "Show this help"
         }
 
@@ -63,6 +72,12 @@ class AdminVue(MemberVue):
                     self.show_member(member)
                 elif command == 'help':
                     self.help(commands)
+
+                elif command == 'addSP':
+                    sport = self.add_sport()
+                    self.show_sport(sport)
+
+
                 else:
                     print("Unknown command")
             except ResourceNotFound:
