@@ -23,3 +23,9 @@ class Common:
 
     def ask_email(self, default=None):
         return self.ask(key_name="email", regex=None, default=default)
+
+    def ask_coach_firstname(self, key_name="coach firstname", default=None):
+        return self.ask(key_name=key_name, regex="^[\S-']{2,50}$", default=default).lower()
+
+    def ask_coach_lastname(self, key_name="coach lastname", default=None):
+        return self.ask(key_name=key_name, regex="^[\S-']{2,50}$", default=default).lower()

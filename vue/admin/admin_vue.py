@@ -45,6 +45,7 @@ class AdminVue(MemberVue, SportVue):
             "search_sp": "Show sport profile",
             "delete_sp": "Delete a sport",
             "update_sp": "Update a sport",
+            "set_coach_sp": "Set a coach to a sport",
             "help": "Show this help"
         }
 
@@ -73,6 +74,19 @@ class AdminVue(MemberVue, SportVue):
                     self.help(commands)
                 elif command == 'add_sp':
                     sport = self.add_sport()
+                    print("Choisissez le coach")
+                    print()
+                    member = self.search_member()
+                    sport = self.set_coach_sport(sport, member['id'])
+                    self.show_sport(sport)
+                elif command == 'set_coach_sp':
+                    print("Choisissez le Sport")
+                    print()
+                    sport = self.search_sport()
+                    print("Choisissez le coach")
+                    print()
+                    member = self.search_member()
+                    sport = self.set_coach_sport(sport, member['id'])
                     self.show_sport(sport)
                 elif command == 'list_sp':
                     self.show_sports()

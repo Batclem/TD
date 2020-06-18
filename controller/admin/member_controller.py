@@ -99,3 +99,4 @@ class MemberController:
                 raise InvalidData("Invalid type %s" % mandatory)
             if "regex" in specs and isinstance(value, str) and not re.match(specs["regex"], value):
                 raise InvalidData("Invalid value %s" % mandatory)
+    

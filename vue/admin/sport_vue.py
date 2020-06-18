@@ -55,3 +55,12 @@ class SportVue:
         sport = self.search_sport()
         self._sport_controller.delete_sport(sport['id'])
         self.succes_message()
+
+    def set_coach_sport(self, sport, member_id):
+        data = {}
+        data['name']= sport['name']
+        data['id_coach'] = member_id
+        return self._sport_controller.update_sport(sport['id'], data)
+  
+
+    
