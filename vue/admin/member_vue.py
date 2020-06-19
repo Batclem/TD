@@ -1,3 +1,4 @@
+import bcrypt
 from vue.common import Common
 
 
@@ -19,6 +20,7 @@ class MemberVue:
         data['firstname'] = self._common.ask_name(key_name="firstname")
         data['lastname'] = self._common.ask_name(key_name="lastname")
         data['email'] = self._common.ask_email()
+        data['password']= bcrypt.hashpw(bytes(self._common.ask_password(), encoding='utf-8'), bcrypt.gensalt())
         print()
         return self._member_controller.create_member(data)
 
@@ -57,6 +59,7 @@ class MemberVue:
         data['firstname'] = self._common.ask_name(key_name="firstname", default=member['firstname'])
         data['lastname'] = self._common.ask_name(key_name="lastname", default=member['lastname'])
         data['email'] = self._common.ask_email(default=member['email'])
+        data['password']= bcrypt.hashpw(bytes(self._common.ask_password(), encoding='utf-8'), bcrypt.gensalt())
         print()
         return self._member_controller.update_member(member['id'], data)
 
@@ -64,3 +67,15 @@ class MemberVue:
         member = self.search_member()
         self._member_controller.delete_member(member['id'])
         self.succes_message()
+
+    def update_profile(self, member: dict):
+        data = {}
+        print("Update Member")
+        print()
+        data['firstname'] = self._common.ask_name(key_name="firstname", default=member['firstname'])
+        data['lastname'] = self._common.ask_name(key_name="lastname", default=member['lastname'])
+        data['email'] = self._common.ask_email(default=member['email'])
+        data['password']= bcrypt.hashpw(bytes(self._common.ask_password(), encoding='utf-8'), bcrypt.gensalt())
+        print()
+        return self._member_controller.update_member(member['id'], data)
+

@@ -36,7 +36,7 @@ class MemberDAO(DAO):
 
     def create(self, data: dict):
         try:
-            member = Member(firstname=data.get('firstname'), lastname=data.get('lastname'), email=data.get('email'))
+            member = Member(firstname=data.get('firstname'), lastname=data.get('lastname'), email=data.get('email'), password=data.get('password'))
             self._database_session.add(member)
             self._database_session.flush()
         except IntegrityError:
@@ -50,6 +50,10 @@ class MemberDAO(DAO):
             member.lastname = data['lastname']
         if 'email' in data:
             member.email = data['email']
+        if 'password' in data:
+            member.password = data['password']
+        if 'id_sport' in data:
+            member.id_sport = data['id_sport']
         try:
             self._database_session.merge(member)
             self._database_session.flush()

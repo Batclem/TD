@@ -5,15 +5,16 @@ from vue.admin.sport_vue import SportVue
 from exceptions import ResourceNotFound, Error, InvalidData
 
 
-class AdminVue(MemberVue, SportVue):
+class UserVue(MemberVue, SportVue):
     """
-    Admin Vue
-    Admin specific interfaces
+    User Vue
+    User specific interfaces
     """
 
-    def __init__(self, member_controller, sport_controller):
-        super().__init__(member_controller)
-        super().__init__(sport_controller)
+    def __init__(self, member, member_controller, sport_controller):
+        SportVue.__init__(self, sport_controller)
+        MemberVue.__init__(self, member_controller)
+        self.member = member
 
     def help(self, commands):
         print()
@@ -30,22 +31,14 @@ class AdminVue(MemberVue, SportVue):
 
         return command
 
-    def admin_shell(self):
+    def user_shell(self):
 
         commands = {
             "exit": "Quit the Shell",
-            "add": "Add association member",
-            "list": "List association members",
-            "search": "Show member profile",
-            "delete": "Delete a member",
-            "update": "Update a member",
-
-            "addSP": "Add association sport",
-            "listSP": "List association sport",
-            "searchSP": "Show sport profile",
-            "deleteSP": "Delete a sport",
-            "updateSP": "Update a sport",
-
+            "update_sport": "change practiced sport",
+            "show_sport": "show practiced sport",
+            "show_profil": "show profil information",
+            "update_profil": "change profil information",
             "help": "Show this help"
         }
 
@@ -57,27 +50,16 @@ class AdminVue(MemberVue, SportVue):
                 if command == 'exit':
                     # Exit loop
                     break
-                elif command == 'add':
-                    member = self.add_member()
-                    self.show_member(member)
-                elif command == 'list':
-                    self.show_members()
-                elif command == 'search':
-                    member = self.search_member()
-                    self.show_member(member)
-                elif command == 'delete':
-                    self.delete_member()
-                elif command == 'update':
-                    member = self.update_member()
-                    self.show_member(member)
+                elif command == 'update_sport':
+                    self.member = self.update_my_sport(self.member)
+                elif command == 'show_sport':
+                    self.member = self.show_sports(self.member)
+                elif command == 'update_profil':
+                    self.member = self.update_profile(self.member)
+                elif command == 'show_profil':
+                    self.show_member(self.member)
                 elif command == 'help':
                     self.help(commands)
-
-                elif command == 'addSP':
-                    sport = self.add_sport()
-                    self.show_sport(sport)
-
-
                 else:
                     print("Unknown command")
             except ResourceNotFound:
