@@ -47,6 +47,8 @@ class SportDAO(DAO):
     def update(self, sport: Sport, data: dict):
         if 'name' in data:
             sport.name = data['name']
+        if 'id_coach' in data:
+            sport.id_coach = data['id_coach']
         try:
             self._database_session.merge(sport)
             self._database_session.flush()
@@ -59,3 +61,4 @@ class SportDAO(DAO):
             self._database_session.delete(entity)
         except SQLAlchemyError as e:
             raise Error(str(e))
+    
