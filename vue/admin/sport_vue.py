@@ -51,6 +51,13 @@ class SportVue:
         print()
         return self._sport_controller.update_sport(sport['id'], data)
 
+    def update_my_sport(self, member: dict):
+        data = {}
+        sport = self.search_sport()
+        print()
+        member['id_sport'] = sport['id']
+        return self._member_controller.update_member(member['id'], member)
+
     def delete_sport(self):
         sport = self.search_sport()
         self._sport_controller.delete_sport(sport['id'])
@@ -61,6 +68,9 @@ class SportVue:
         data['name']= sport['name']
         data['id_coach'] = member_id
         return self._sport_controller.update_sport(sport['id'], data)
-  
+    
+    def show_sports(self, member: dict):
 
+        sport = self._sport_controller.get_sport(member['id_sport'])
+        print("* %s " % (sport['name'].capitalize()))
     
